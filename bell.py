@@ -1,8 +1,6 @@
 try:
 	import RPi.GPIO as gpio
 	gpio.setmode(gpio.BOARD)
-	global tvpin
-	tvpin =  5
 	gpio.setup(tvpin, gpio.OUT)
 	global ispi
 	ispi = True
@@ -10,6 +8,7 @@ except ImportError:
 	global ispi
 	ispi = False
 	print("WARNING: Couldn't load the RPi.GPIO module, GPIO functions won't work")
+from init_vars import *
 import os
 import time
 import datetime
@@ -19,16 +18,15 @@ def ringBell(startend):
 		gpio.output(tvpin, gpio.HIGH)
 	time.sleep(5)
 	if startend == "start":
-		os.system("start sound/start.wav")
+		os.system(termcommand+" sound/start.wav")
 	elif startend == "end":
-		os.system("start sound/end.wav")
+		os.system(termcommand+" sound/end.wav")
 	time.sleep(10)
 	if ispi:
 		gpio.output(tvpin, gpio.HIGH)
 def importSchoolDays():
 	dayfile = open("data/schooldays.txt","r")
 	dayraw = dayfile.readlines()
-	print(dayraw)
 	dayfile.close()
 	try:
 		days = dayraw[0].split(" ")
@@ -180,8 +178,6 @@ try:
 except IOError:
 	print("ERROR:Couldn't import every file from the data folder, file may be deleted, or may be renamed to a wrong name")
 	print("Stopping...")
-	exit()
-if isBreak(breaks):
 	exit()
 print("Ring schedule:")
 print(schedule)
