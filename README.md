@@ -7,8 +7,7 @@
 * Specify exceptions for the second an third points
 * Switch a relay through a Raspberry Pi's GPIO pins (more on that below)
 
-## With this piece of software you can't (yet):
-* Write logs
+## Whith this piece of software you can't (yet):
 * Switch a relay with anything else than a Raspberry Pi's GPIO pins
 
 ### Installation:
