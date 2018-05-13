@@ -1,3 +1,14 @@
+import time
+def writeLog(type,text):
+	log = open("logs/log_"+time.strftime("%Y-%m-%d",time.localtime())+".txt","a")
+	if type == "warn":
+		sign = "WARNING: "
+	elif type == "err":
+		sign = "ERROR:   "
+	else:
+		sign = "INFO:    "
+	log.write(time.strftime("%H:%M:%S",time.localtime())+" "+sign+"	"+text+"\n")
+writeLog("inf","Starting...\nCurrent time: "+time.strftime("%Y/%m/%d %H:%M:%S"))
 try:
 	import RPi.GPIO as gpio
 	gpio.setmode(gpio.BOARD)
@@ -8,9 +19,9 @@ except ImportError:
 	global ispi
 	ispi = False
 	print("WARNING: Couldn't load the RPi.GPIO module, GPIO functions won't work")
+	writeLog("warn","Couldn't load the RPi.GPIO module, GPIO functions won't work")
 from init_vars import *
 import os
-import time
 import datetime
 from threading import Thread
 def ringBell(startend):
@@ -19,7 +30,9 @@ def ringBell(startend):
 	time.sleep(5)
 	if startend == "start":
 		os.system(termcommand+" sound/start.wav")
+		writeLog("inf","Sending command to play end.wav")
 	elif startend == "end":
+		writeLog("inf","Sending command to play start.wav" )
 		os.system(termcommand+" sound/end.wav")
 	time.sleep(10)
 	if ispi:
@@ -91,11 +104,10 @@ def importBreaks():
 		i=i+1
 	return breaks
 def isBreak(breaks):
-	currdate = time.strftime("%d/%m/%Y", time.localtime())
 	i =0
 	breakday = False
 	while i<len(breaks):
-		if breaks[i][0] < currdate and currdate < breaks[i][1]:
+		if time.strptime(breaks[i][0],"%d/%m/%Y") < time.localtime() and time.localtime() < time.strptime(breaks[i][1],"%d/%m/%Y"):
 			breakday = True
 		i = i+1
 	return breakday
@@ -153,18 +165,21 @@ def startTimer(schedule):
 		if thisday != time.strftime("%d/%m/%Y",time.localtime()):
 			print("INFO: Day is over")
 			print("Stopping...")
+			writeLog("inf","End of day --> Stopping")
 			exit()
 		if asd[0] == True:
+			writeLog("inf","Ringing bell")
 			if asd[1] == 0:
-				print("ringing bell (start) at "+time.strftime("%H:%M",time.localtime()))
+				print("INFO: Ringing bell (start) at "+time.strftime("%H:%M",time.localtime()))
 				ringBell("start")
 				time.sleep(60)
 			elif asd[1] == 1:
-				print("ringing bell (end) at "+time.strftime("%H:%M",time.localtime()))
+				print("INFO: Ringing bell (end) at "+time.strftime("%H:%M",time.localtime()))
 				ringBell("end")
 				time.sleep(60)
 		elif isPreBellTime(schedule):
-			print("ringing prebell at "+time.strftime("%H:%M",time.localtime()))
+			writeLog("inf","Ringing warning bell")
+			print("INFO: Ringing warning bell at "+time.strftime("%H:%M",time.localtime()))
 			ringBell("start")
 			time.sleep(60)
 		else:
@@ -178,7 +193,10 @@ try:
 except IOError:
 	print("ERROR:Couldn't import every file from the data folder, file may be deleted, or may be renamed to a wrong name")
 	print("Stopping...")
+	writeLog("err","Couldn't import every file --> Stopping")
 	exit()
+print("INFO: All data has been read succesfully!")
+writeLog("inf","All data has been read succesfully")
 print("Ring schedule:")
 print(schedule)
 print("Breaks:")
@@ -194,15 +212,24 @@ if isSchoolDay(schooldays):
 	if isBreak(breaks) == False:
 		if isDay(freedays) == False:
 			print("INFO: Starting timer functions")
+			writeLog("inf","Today is a schoolday")
+			writeLog("inf","Starting timer functions")
 			startTimer(schedule)
 			stopped = False
 		else:
 			print("INFO: Today is a weekday without school")
+			writeLog("inf","Today is a weekday without school")
 	else:
 		print("INFO: Today there is a break going on")
+		writeLog("inf","Today is included in a break")
 else:
 	print("INFO: Today is not a weekday with school")
+	writeLog("inf","")
 if isDay(satschool) and stopped:
 	print("INFO: Today is a saturday with school")
+	writeLog("inf", "Today is a saturday with school")
 	print("Starting timer functions")
+	writeLog("inf","Starting timer functions")
 	startTimer(schedule)
+print("INFO: Exiting")
+writeLog("inf","Exiting")
