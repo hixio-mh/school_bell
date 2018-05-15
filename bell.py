@@ -9,14 +9,13 @@ def writeLog(type,text):
 		sign = "INFO:    "
 	log.write(time.strftime("%H:%M:%S",time.localtime())+" "+sign+"	"+text+"\n")
 writeLog("inf","Starting...\nCurrent time: "+time.strftime("%Y/%m/%d %H:%M:%S"))
+global ispi
 try:
 	import RPi.GPIO as gpio
 	gpio.setmode(gpio.BOARD)
 	gpio.setup(tvpin, gpio.OUT)
-	global ispi
 	ispi = True
 except ImportError:
-	global ispi
 	ispi = False
 	print("WARNING: Couldn't load the RPi.GPIO module, GPIO functions won't work")
 	writeLog("warn","Couldn't load the RPi.GPIO module, GPIO functions won't work")
