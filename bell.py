@@ -148,6 +148,7 @@ def isPreBellTime(schedule):
 		timesplit[1] = int(timesplit[1])
 		if timesplit[1] - 2 < 0:
 			timesplit[1] = (timesplit[1] - 2)+60
+			timesplit[0] = timesplit[0]-1
 		else:
 			timesplit[1] = timesplit[1]-2
 		if timenow.tm_hour == timesplit[0] and timenow.tm_min == timesplit[1]:
