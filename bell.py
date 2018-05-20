@@ -10,6 +10,7 @@ def writeLog(type,text):
 	log.write(time.strftime("%H:%M:%S",time.localtime())+" "+sign+"	"+text+"\n")
 writeLog("inf","Starting...\nCurrent time: "+time.strftime("%Y/%m/%d %H:%M:%S"))
 global ispi
+from init_vars import *
 try:
 	import RPi.GPIO as gpio
 	gpio.setmode(gpio.BOARD)
@@ -19,7 +20,6 @@ except ImportError:
 	ispi = False
 	print("WARNING: Couldn't load the RPi.GPIO module, GPIO functions won't work")
 	writeLog("warn","Couldn't load the RPi.GPIO module, GPIO functions won't work")
-from init_vars import *
 import os
 import datetime
 from threading import Thread
