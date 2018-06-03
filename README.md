@@ -35,4 +35,5 @@ The playing of audio is not being handled by python. You have to specify a termi
 
 ### Raspberry Pi GPIO output:
 If the program can load the `RPi.GPIO` module, it will switch a GPIO pins output to `HIGH` (3.3v) when the bell is ringing. This can be used to turn on an indicator LED, or switch an opto-coupled relay(to turn on an amplifier for example).   
-The used GPIO pin is pin `5` by default, but can be specified in the `init_vars` file by editing the `tvpin` variable.
+The used GPIO pin is pin `5` by default, but can be specified in the `init_vars.py` file by editing the `tvpin` variable.   
+The program also supports two status LEDs, one of them is indicating whether the script is running or not (can be specified by changing the `isrunningledpin` variable, default is pin 7) and the other one is indicating that the timer is working by blinking every ~10 seconds (can be specified by changing the `timerledpin` variable, default is 3).

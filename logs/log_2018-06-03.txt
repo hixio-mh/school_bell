@@ -1,0 +1,14 @@
+14:51:57 INFO:    	Starting...
+Current time: 2018/06/03 14:51:57
+14:51:57 WARNING: 	Couldn't load the RPi.GPIO module, GPIO functions won't work
+14:51:57 INFO:    	All data has been read succesfully
+14:51:57 INFO:    	Today is a schoolday
+14:51:57 INFO:    	Starting timer functions
+14:52:01 INFO:    	Stopped manually
+14:52:23 INFO:    	Starting...
+Current time: 2018/06/03 14:52:23
+14:52:23 WARNING: 	Couldn't load the RPi.GPIO module, GPIO functions won't work
+14:52:23 INFO:    	All data has been read succesfully
+14:52:23 INFO:    	Today is a schoolday
+14:52:23 INFO:    	Starting timer functions
+14:52:24 INFO:    	Stopped manually
