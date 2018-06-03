@@ -30,7 +30,7 @@ def stopBell():
 	if ispi:
 		gpio.output(isrunningledpin, gpio.LOW)
 		gpio.output(timerledpin, gpio.LOW)
-		gpio.output(tvpin, gpio.LOW
+		gpio.output(tvpin, gpio.LOW)
 		gpio.cleanup()
 	exit()
 def ringBell(startend):
