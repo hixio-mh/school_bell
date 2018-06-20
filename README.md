@@ -1,5 +1,5 @@
 # Discontinued!!!
-### (New location)[https://gitlab.com/sisakmarton/raspberry_school_bell]
+### [New location](https://gitlab.com/sisakmarton/raspberry_school_bell)
 
 # Loudspeaker school bell
 
